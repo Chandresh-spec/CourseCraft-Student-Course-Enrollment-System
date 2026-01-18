@@ -10,4 +10,23 @@ User=get_user_model()
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=('username','password','email','role','mobile_number')
+        fields=('username','password','email','mobile_number')
+        extra_kwargs={
+            "password":{"write_only":True}
+        }
+
+
+
+    
+    def create(self, validated_data):
+        user=User.objects.create_user(
+           username=validated_data["username"],
+           email=validated_data["email"],
+           role="STUDENT",
+           mobile_number=validated_data.get("mobile_number"),
+           password=validated_data["password"],
+        )
+
+        user.save()
+
+        return user

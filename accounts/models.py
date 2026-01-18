@@ -5,8 +5,8 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     ROLE_CHOICE=(
-        ('student','student'),
-        ('teacher','teacher'),
+        ('Students','student'),
+        ('Admin','teacher'),
     )
     role=models.CharField(choices=ROLE_CHOICE,default='student',null=False,blank=False)
     mobile_number=models.CharField(max_length=12,null=True,blank=False)

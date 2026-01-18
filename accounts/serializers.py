@@ -15,6 +15,40 @@ class RegisterSerializer(serializers.ModelSerializer):
             "password":{"write_only":True}
         }
 
+    
+    def validate(self, attrs):
+        password=attrs.get('password')
+
+        if len(password)<8:
+            raise serializers.ValidationError("password length must be greater than 8")
+        
+        if not any(char in "@#$!%&*" for char in password):
+            raise serializers.ValidationError("Password must include special character(@ #$!%&*)")
+        
+
+        if not any(char.isupper() for char in password):
+            raise serializers.ValidationError("Must include a Upper case letter")
+        
+        return attrs
+    
+
+
+    def validate_email(self,value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("Gmail already used by another person")
+        
+        return value
+    
+
+
+    def validate_mobile_number(self,value):
+        if not len(value)==10 or not all(num.isdigit() for num in value):
+            raise serializers.ValidationError("mobile number must contain 10 digit")
+        
+        return value
+
+
+
 
 
     

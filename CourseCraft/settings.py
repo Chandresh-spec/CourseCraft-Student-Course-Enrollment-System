@@ -159,7 +159,7 @@ from datetime import timedelta
 
 
 SIMPLE_JWT={
-    "ACCESS_TOKEN_LIFETIME":timedelta(minutes=10),
+    "ACCESS_TOKEN_LIFETIME":timedelta(minutes=50),
     "REFRESH_TOKEN_LIFETIME":timedelta(days=7),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }

@@ -33,4 +33,4 @@ class Courses(models.Model):
 
 
     def __str__(self):
-        return f"self.course_name"
+        return  self.course_name

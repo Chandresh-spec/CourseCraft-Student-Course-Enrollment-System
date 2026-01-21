@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from .serializers import CourseSerializer
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import ListModelMixin
-from .models import Courses
-from .serializers import CourseSerializer
+from rest_framework.mixins import ListModelMixin,RetrieveModelMixin,CreateModelMixin
+from .models import Courses,UserCoursePurchase
+from .serializers import CourseSerializer,CPISerializer
 from .pagination import CoursePagination
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 
@@ -18,3 +19,37 @@ class ListCourseView(ListModelMixin,GenericAPIView):
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
 
+
+
+class CourseInfoView(RetrieveModelMixin,GenericAPIView):
+    queryset=Courses.objects.all()
+    serializer_class=CourseSerializer
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request,*args,**kwargs)
+    
+
+
+
+class CoursePurchasedInfo(ListModelMixin,GenericAPIView,CreateModelMixin):
+    permission_classes=[IsAuthenticated]
+    serializer_class=CPISerializer
+    
+    def get_queryset(self):
+        return UserCoursePurchase.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+    
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request,*args,**kwargs)
+    
+
+    def post(self,request,*args,**kwargs):
+        return self.create(request,*args,**kwargs)
+    
+
+
+
+
+   

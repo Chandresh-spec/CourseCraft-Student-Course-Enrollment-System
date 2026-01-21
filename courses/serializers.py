@@ -1,13 +1,14 @@
 from rest_framework import serializers
-from .models import Courses
+from .models import Courses,UserCoursePurchase
 
 
 
 class CourseSerializer(serializers.ModelSerializer):
+    course_img=serializers.ImageField(use_url=True)
     class Meta:
         model=Courses
-        fields=('course_name','price','duration','certificate','course_img','short_description','description','levels',
-                'instrctor_name','total_students','rating')
+        fields=('id','course_name','price','duration','certificate','course_img','short_description','description','levels',
+                'instructor_name','total_students','rating')
         
 
         
@@ -15,4 +16,9 @@ class CourseSerializer(serializers.ModelSerializer):
 
     
 
+class CPISerializer(serializers.ModelSerializer):
+    class Meta:
+        model=UserCoursePurchase
+        fields= ["course"]
+        read_only_fields=['is_paid','purchased_at']
 

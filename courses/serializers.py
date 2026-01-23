@@ -22,3 +22,12 @@ class CPISerializer(serializers.ModelSerializer):
         fields= ["course"]
         read_only_fields=['is_paid','purchased_at']
 
+
+
+class MyLearningSerializers(serializers.ModelSerializer):
+    course=CourseSerializer(read_only=True)
+    class Meta:
+        model=UserCoursePurchase
+        fields=['course']
+        read_only_fields=['is_paid','purchased_at']
+

@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.urls import path
-from .views import ListCourseView,CourseInfoView,CoursePurchasedInfo
+from .views import ListCourseView,CourseInfoView,PurchaseCourse,MylearningViews
 urlpatterns = [
    path('home/',ListCourseView.as_view()),
    path('info/<int:pk>/',CourseInfoView.as_view()),
-   path('purchase-course/<int:pk>/',CoursePurchasedInfo.as_view()),
+   path('purchase-course/',PurchaseCourse.as_view()),
+   path('myLearning/',MylearningViews.as_view()),
 ]

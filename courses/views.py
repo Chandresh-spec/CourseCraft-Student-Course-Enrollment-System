@@ -3,19 +3,31 @@ from .serializers import CourseSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin,RetrieveModelMixin,CreateModelMixin
 from .models import Courses,UserCoursePurchase
-from .serializers import CourseSerializer,CPISerializer,MyLearningSerializers
-from .pagination import CoursePagination
+from .serializers import CourseSerializer,CPISerializer,MyLearningSerializers,ShowCoursesSerializers
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from .pagination import CoursePagination
 from django.core.cache import cache
+# from rest_framework.filters import SearchFilter
 # Create your views here.
 
 
 
 
 class ListCourseView(ListModelMixin,GenericAPIView):
+    permission_classes=[AllowAny]
     queryset=Courses.objects.all()
     serializer_class=CourseSerializer
     pagination_class=CoursePagination
+#     filter_backends=[SearchFilter]
+#     search_fields=[
+#          'course_name',
+#          'price',
+#          'instructor_name'
+         
+#     ]
     
 
     def get(self,request,*args,**kwargs):
@@ -56,4 +68,12 @@ class MylearningViews(ListModelMixin,GenericAPIView):
 
      def get(self,request,*args,**kwargs):
           return self.list(request,*args,**kwargs)
-   
+
+
+
+
+
+          
+          
+
+    

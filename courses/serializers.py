@@ -31,3 +31,13 @@ class MyLearningSerializers(serializers.ModelSerializer):
         fields=['course']
         read_only_fields=['is_paid','purchased_at']
 
+
+
+
+
+class ShowCoursesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model=Courses
+        fields=('id','course_name','price','duration','certificate','short_description','description','levels',
+                'instructor_name','total_students','rating')
+        

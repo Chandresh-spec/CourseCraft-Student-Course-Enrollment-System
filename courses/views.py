@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from .pagination import CoursePagination
 from django.core.cache import cache
-# from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter
 # Create your views here.
 
 
@@ -21,13 +21,13 @@ class ListCourseView(ListModelMixin,GenericAPIView):
     queryset=Courses.objects.all()
     serializer_class=CourseSerializer
     pagination_class=CoursePagination
-#     filter_backends=[SearchFilter]
-#     search_fields=[
-#          'course_name',
-#          'price',
-#          'instructor_name'
+    filter_backends=[SearchFilter]
+    search_fields=[
+         'course_name',
+         'price',
+         'instructor_name'
          
-#     ]
+    ]
     
 
     def get(self,request,*args,**kwargs):
